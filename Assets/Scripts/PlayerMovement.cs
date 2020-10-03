@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 crouchScale = new Vector3(1f, 0.5f, 1f);
     float moveX, moveY, speed;
 
-    void Update()
+    void FixedUpdate()
     {
         //Sprint
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (!sprinting && grounded) sprinting = true;
+            if (!sprinting && !crouching && grounded) sprinting = true;
         }
         else
         {
@@ -61,7 +61,11 @@ public class PlayerMovement : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(getLadderRaycastOrigin(), (facingRight ? Vector2.right : Vector2.left), 0.05f);
             if (!climbing && !crouching && hit.collider != null && hit.collider.gameObject.tag == "Climbable" && Mathf.Abs(moveX) > 0.01f) startClimbing();
-            if (climbing && (hit.collider == null || hit.collider.gameObject.tag != "Climbable")) stopClimbing();
+            if (climbing && (hit.collider == null || hit.collider.gameObject.tag != "Climbable")) 
+            {
+                RaycastHit2D backhit = Physics2D.Raycast(getLadderRaycastOrigin(true), (facingRight ? Vector2.left : Vector2.right), 0.1f);
+                if (backhit.collider == null || backhit.collider.gameObject.tag != "Climbable") stopClimbing();
+            } 
         }
 
         // Movement
@@ -102,9 +106,11 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Speed: " + rb.velocity.magnitude);
     }
 
-    private Vector3 getLadderRaycastOrigin()
+    private Vector3 getLadderRaycastOrigin(bool reverse = false)
     {
-        return new Vector3(transform.position.x + (facingRight ? 0.42f : -0.42f), transform.position.y - 0.8f, transform.position.z);
+        float xOff = facingRight ? 0.42f : -0.42f;
+        if (reverse) xOff *= -1;
+        return new Vector3(transform.position.x + xOff, transform.position.y - 0.8f, transform.position.z);
     }
 
     private void jump()
