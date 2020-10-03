@@ -10,9 +10,22 @@ public class CameraMovement : MonoBehaviour
     public float yMin = -10f;
     public float yMax = 10f;
 
+    private void Start()
+    {
+        MasterManager.Instance.registerOnPlayerSpawned(onPlayerSpawned);
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
-        this.transform.position = new Vector3(Mathf.Clamp(target.transform.position.x, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), this.transform.position.z);
+        if (target != null)
+        {
+            this.transform.position = new Vector3(Mathf.Clamp(target.transform.position.x, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), this.transform.position.z);
+        }
+    }
+
+    private void onPlayerSpawned(GameObject playerObject)
+    {
+        target = playerObject;
     }
 }

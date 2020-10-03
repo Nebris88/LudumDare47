@@ -15,6 +15,13 @@ public class PlayerHealthUI : MonoBehaviour
 
     void Start()
     {
+        MasterManager.Instance.registerOnPlayerSpawned(onPlayerSpawned);
+    }
+
+    private void onPlayerSpawned(GameObject playerObject)
+    {
+        ph = playerObject.GetComponent<PlayerHealth>();
+
         for (int i = 0; i < ph.playerHealth; i++)
         {
             GameObject newHeart = Instantiate(heartPrefab);
@@ -22,10 +29,10 @@ public class PlayerHealthUI : MonoBehaviour
             hearts.Add(newHeart.GetComponent<Image>());
         }
 
-        ph.registerOnPlayerDamaged(OnPlayerDamaged);
+        ph.registerOnPlayerDamaged(onPlayerDamaged);
     }
 
-    public void OnPlayerDamaged()
+    public void onPlayerDamaged()
     {
         for (int i = 0; i < hearts.Count; i++)
         {

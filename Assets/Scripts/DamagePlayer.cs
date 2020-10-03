@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamagerType { Spikes, Flames }
+public enum DamagerType { Spikes, Flames, Void }
 public class DamagePlayer : MonoBehaviour
 {
     public DamagerType damagerType;
@@ -21,6 +21,9 @@ public class DamagePlayer : MonoBehaviour
                 break;
             case DamagerType.Flames:
                 if (!ph.isFireproof) ph.takeDamage(gameObject, 10);
+                break;
+            case DamagerType.Void:
+                ph.takeDamage(gameObject, 10);
                 break;
         }
     }
