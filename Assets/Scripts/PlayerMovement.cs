@@ -29,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 crouchScale = new Vector3(1f, 0.5f, 1f);
     float moveX, moveY, speed;
 
+    void Start()
+    {
+        cc.gameObject.SetActive(false);
+    }
+
     void Update()
     {
         if (inControl)
@@ -129,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         crouching = true;
         transform.localScale = crouchScale;
         pc.transform.localPosition = new Vector3(0, -.75f, 0);
+        cc.gameObject.SetActive(true);
     }
 
     private void uncrouch()
@@ -136,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
         crouching = false;
         transform.localScale = Vector3.one;
         pc.transform.localPosition = Vector3.zero;
+        cc.gameObject.SetActive(false);
     }
 
     private void startClimbing()

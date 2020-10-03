@@ -12,17 +12,10 @@ public class PlayerHealth : MonoBehaviour
 
     public bool isFireproof = false;
 
-    float damageImmunity = 0f;
+    public float damageImmunity = 0f;
 
     Action onPlayerDamaged;
     Action onPlayerKilled;
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (damageImmunity > 0) return;
-        if (collision.collider.gameObject.tag == "Spikes") takeDamage(collision.collider.gameObject);
-        else if (!isFireproof && collision.collider.gameObject.tag == "Flames") takeDamage(collision.collider.gameObject, 10);
-    }
 
     void Update()
     {
@@ -30,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
         if (damageImmunity > 0) damageImmunity -= Time.deltaTime;
     }
 
-    private void takeDamage (GameObject damager, int amount = 1)
+    public void takeDamage (GameObject damager, int amount = 1)
     {
         Debug.Log("Player Collided with: " + damager.name);
         damageImmunity = 2f;
