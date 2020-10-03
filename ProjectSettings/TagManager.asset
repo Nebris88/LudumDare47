@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Climbable
   - Spikes
+  - Flames
   layers:
   - Default
   - TransparentFX
