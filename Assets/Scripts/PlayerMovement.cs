@@ -14,7 +14,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpPower = 10f;
 
     public bool canDoubleJump = false;
+    public bool canSprint = false;
     public bool canClimb = false;
+
+    public bool inControl = true;
 
     public bool facingRight = false;
     public bool grounded = false;
@@ -26,83 +29,85 @@ public class PlayerMovement : MonoBehaviour
     Vector3 crouchScale = new Vector3(1f, 0.5f, 1f);
     float moveX, moveY, speed;
 
-    void FixedUpdate()
+    void Update()
     {
-        //Sprint
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (inControl)
         {
-            if (!sprinting && !crouching && grounded) sprinting = true;
-        }
-        else
-        {
-            sprinting = false;
-        }
-
-        speed = walkSpeed * (sprinting ? 2f : 1f);
-
-        //Check Grounded
-        List <Collider2D> gr = new List<Collider2D>();
-        gc.OverlapCollider(new ContactFilter2D(), gr);
-        grounded = (gr.Count > 0);
-
-        //Get Axis Input
-        moveX = Input.GetAxis("Horizontal"); 
-        moveY = Input.GetAxis("Vertical");
-
-        //Direction
-        if ((facingRight && moveX < 0) || (!facingRight && moveX > 0))
-        {
-            sprinting = false;
-            facingRight = !facingRight;
-        }
-
-        //Climbing
-        if (canClimb)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(getLadderRaycastOrigin(), (facingRight ? Vector2.right : Vector2.left), 0.05f);
-            if (!climbing && !crouching && hit.collider != null && hit.collider.gameObject.tag == "Climbable" && Mathf.Abs(moveX) > 0.01f) startClimbing();
-            if (climbing && (hit.collider == null || hit.collider.gameObject.tag != "Climbable")) 
+            //Sprint
+            if (canSprint && Input.GetKey(KeyCode.LeftShift))
             {
-                RaycastHit2D backhit = Physics2D.Raycast(getLadderRaycastOrigin(true), (facingRight ? Vector2.left : Vector2.right), 0.1f);
-                if (backhit.collider == null || backhit.collider.gameObject.tag != "Climbable") stopClimbing();
-            } 
-        }
-
-        // Movement
-        if (Mathf.Abs(moveX) > 0.01f) rb.velocity = new Vector2(Mathf.Clamp(speed * moveX, -speed, speed), rb.velocity.y);
-        if (climbing && Mathf.Abs(moveY) > 0.01f) rb.velocity = new Vector2(0, Mathf.Clamp(walkSpeed * moveY, -walkSpeed, walkSpeed));
-
-        //Jumping
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (grounded || climbing)
-            {
-                jump();
+                if (!sprinting && !crouching && grounded) sprinting = true;
             }
-            else if (canDoubleJump && !doubleJumped)
+            else
             {
-                doubleJumped = true;
-                jump();
+                sprinting = false;
+            }
+
+            speed = walkSpeed * (sprinting ? 2f : 1f);
+
+            //Check Grounded
+            List <Collider2D> gr = new List<Collider2D>();
+            gc.OverlapCollider(new ContactFilter2D(), gr);
+            grounded = (gr.Count > 0);
+
+            //Get Axis Input
+            moveX = Input.GetAxis("Horizontal"); 
+            moveY = Input.GetAxis("Vertical");
+
+            //Direction
+            if ((facingRight && moveX < 0) || (!facingRight && moveX > 0))
+            {
+                sprinting = false;
+                facingRight = !facingRight;
+            }
+
+            //Climbing
+            if (canClimb)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(getLadderRaycastOrigin(), (facingRight ? Vector2.right : Vector2.left), 0.05f);
+                if (!climbing && !crouching && hit.collider != null && hit.collider.gameObject.tag == "Climbable" && Mathf.Abs(moveX) > 0.01f) startClimbing();
+                if (climbing && (hit.collider == null || hit.collider.gameObject.tag != "Climbable")) 
+                {
+                    RaycastHit2D backhit = Physics2D.Raycast(getLadderRaycastOrigin(true), (facingRight ? Vector2.left : Vector2.right), 0.1f);
+                    if (backhit.collider == null || backhit.collider.gameObject.tag != "Climbable") stopClimbing();
+                } 
+            }
+
+            // Movement
+            rb.velocity = new Vector2(Mathf.Clamp(speed * moveX, -speed, speed), rb.velocity.y);
+            if (climbing && Mathf.Abs(moveY) > 0.01f) rb.velocity = new Vector2(0, Mathf.Clamp(walkSpeed * moveY, -walkSpeed, walkSpeed));
+
+            //Jumping
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (grounded || climbing)
+                {
+                    jump();
+                }
+                else if (canDoubleJump && !doubleJumped)
+                {
+                    doubleJumped = true;
+                    jump();
+                }
+            }
+
+            //Crouching
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (!crouching && !climbing) crouch();
+            }
+            else if(crouching)
+            {
+                List<Collider2D> cr = new List<Collider2D>();
+                cc.OverlapCollider(new ContactFilter2D(), cr);
+                if (cr.Count == 0) uncrouch();
             }
         }
-
-        //Crouching
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (!crouching && !climbing) crouch();
-        }
-        else if(crouching)
-        {
-            List<Collider2D> cr = new List<Collider2D>();
-            cc.OverlapCollider(new ContactFilter2D(), cr);
-            if (cr.Count == 0) uncrouch();
-        }
-
         //Reset Double Jump on Ground/Climb
         if (doubleJumped && (grounded || climbing)) doubleJumped = false;
 
         //Full stop when really slow
-        if (rb.velocity.magnitude < 0.3f) rb.velocity = Vector2.zero;
+        if (Mathf.Abs(rb.velocity.x) < 0.5f) rb.velocity = new Vector2(0, rb.velocity.y);
         //Debug.Log("Speed: " + rb.velocity.magnitude);
     }
 
