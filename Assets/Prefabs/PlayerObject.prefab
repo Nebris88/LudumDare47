@@ -308,6 +308,7 @@ MonoBehaviour:
   crouching: 0
   climbing: 0
   doubleJumped: 0
+  victory: 0
 --- !u!114 &8388574861823101322
 MonoBehaviour:
   m_ObjectHideFlags: 0
