@@ -5,7 +5,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Gems { Sapphire, Emerald, Ruby, Diamond }
+public enum Gems { Sapphire, Emerald, Ruby, Amythest }
 
 public class MasterManager : MonoBehaviour
 {
@@ -47,7 +47,7 @@ public class MasterManager : MonoBehaviour
 
         pm.canSprint = gems[Gems.Sapphire];
         pm.canClimb = gems[Gems.Emerald];
-        pm.canDoubleJump = gems[Gems.Diamond];
+        pm.canDoubleJump = gems[Gems.Amythest];
         ph.isFireproof = gems[Gems.Ruby];
         resetGems();
 

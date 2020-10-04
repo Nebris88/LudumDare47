@@ -35,7 +35,7 @@ World Tile Map
 	Pressure Plate
 	Door
 	ToggleState (can exist or not, some disappear forever, others come back on timer, etc)
-	Falling (falls down to next tile0
+	Falling (falls down to next tile)
 
 Solve Order:
 		
@@ -50,8 +50,8 @@ Solve Order:
 	1-2				none			Sprint				1-2 blocks 1-3/4	Collect Sprint
 	1-3				Sprint			Climb				1-3 blocks 1-2		Press button and go through door quickly with sprint - collect Climb
 	1-4				Climb			Fireproof			1-4 block 1-3		Climb pillar, Collect Fireproof
-	1-5				Fireproof		Double Jump								Walk through fire, Collect Double Jump, culd collect Sprint, but no need
-	1-2-1-3			Double Jump		Sprint+Climb							Access 2 with double jump, collect Sprint, then Collect Climb
+	1-5				Fireproof		DJ+S									Walk through fire, Collect Double Jump,
+	1-2-1-3			DJ+S			Sprint+Climb							Access 2 with double jump, collect Sprint, then Collect Climb
 	1-4-5-1-2		Sprint+Climb	DJ+FP+Sprint		1-4 block 1-3		Collect Fireproof, Sprint Door to 5, then Collect Double Jump, Collect Sprint
 	1-2-1-5-4-5-3	DJ+FP+Sprint	S+C+DJ+FP			1-3 blocks 1-5		Collect Sprint, Collect DJ, 5-4, collect FP, return to 5, long jump to 3, collect climb		
 	1-4-6			S+C+DJ+FP		Escape!									climb pillar, mega super long jump to 6, freedom!

@@ -26,6 +26,7 @@ public class PlayerHealthUI : MonoBehaviour
         {
             GameObject newHeart = Instantiate(heartPrefab);
             newHeart.transform.SetParent(transform);
+            newHeart.GetComponent<Image>().sprite = heartFull;
             hearts.Add(newHeart.GetComponent<Image>());
         }
 

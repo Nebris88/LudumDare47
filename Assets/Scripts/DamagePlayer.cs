@@ -11,7 +11,6 @@ public class DamagePlayer : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.isTrigger) return;
-        Debug.Log(col.gameObject.name);
         PlayerHealth ph = col.transform.parent.GetComponent<PlayerHealth>();
         if (ph == null) return;
 

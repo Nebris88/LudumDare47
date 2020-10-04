@@ -13,8 +13,8 @@ public class PlayerGemUI : MonoBehaviour
     public Sprite emeraldEmpty;
     public Sprite rubyFilled;
     public Sprite rubyEmpty;
-    public Sprite diamondFilled;
-    public Sprite diamondEmpty;
+    public Sprite amythestFilled;
+    public Sprite amythestEmpty;
 
     Dictionary<Gems, GameObject> gemObjects = new Dictionary<Gems, GameObject>();
 
@@ -39,10 +39,15 @@ public class PlayerGemUI : MonoBehaviour
     private void onGemCollected(Gems gem, bool firstTime)
     {
         gemObjects[gem].GetComponent<Image>().sprite = getSprite(gem);
+        gemObjects[gem].GetComponent<Image>().color = getSpriteColor(gem);
     }
 
     private Sprite getSprite(Gems gem, bool empty = false)
     {
+
+        return empty ? sapphireEmpty : sapphireFilled;
+
+        /*
         switch (gem)
         {
             case Gems.Sapphire:
@@ -51,10 +56,28 @@ public class PlayerGemUI : MonoBehaviour
                 return empty ? emeraldEmpty : emeraldFilled;
             case Gems.Ruby:
                 return empty ? rubyEmpty : rubyFilled;
-            case Gems.Diamond:
-                return empty ? diamondEmpty : diamondFilled;
+            case Gems.Amythest:
+                return empty ? amythestEmpty : amythestFilled;
             default:
                 return null;
+        }
+        */
+    }
+
+    private Color getSpriteColor(Gems gem)
+    {
+        switch (gem)
+        {
+            case Gems.Sapphire:
+                return Color.blue;
+            case Gems.Emerald:
+                return Color.green;
+            case Gems.Ruby:
+                return Color.red;
+            case Gems.Amythest:
+                return Color.magenta;
+            default:
+                return Color.white;
         }
     }
 }
