@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Gems { Sapphire, Ruby, Emerald, Diamond }
+public enum Gems { Sapphire, Emerald, Ruby, Diamond }
 
 public class MasterManager : MonoBehaviour
 {
@@ -67,18 +68,20 @@ public class MasterManager : MonoBehaviour
         }
     }
 
-    public void resetWorld()
+    public void resetWorld(bool complete = false)
     {
         onPlayerSpawned = null;
         onGemCollected = null;
+        if (complete) resetGems(true);
         SceneManager.LoadScene("Game"); 
     }
 
-    public void resetGems()
+    public void resetGems(bool complete = false)
     {
         foreach (Gems gem in Enum.GetValues(typeof(Gems)))
         {
             gems[gem]= false;
+            if (complete) firstTimeGems[gem]= true;
         }
     }
 

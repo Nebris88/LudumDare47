@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public bool climbing = false;
     public bool doubleJumped = false;
 
+    public bool victory = false;
+
     Vector3 crouchScale = new Vector3(1f, 0.5f, 1f);
     float moveX, moveY, speed;
 
@@ -36,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (victory)
+        {
+            facingRight = true;
+            rb.velocity = new Vector2(walkSpeed, rb.velocity.y);
+            return;
+        }
+
         if (inControl)
         {
             //Sprint
@@ -113,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Full stop when really slow
         if (Mathf.Abs(rb.velocity.x) < 0.5f) rb.velocity = new Vector2(0, rb.velocity.y);
-        //Debug.Log("Speed: " + rb.velocity.magnitude);
     }
 
     private Vector3 getLadderRaycastOrigin(bool reverse = false)

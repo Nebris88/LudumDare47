@@ -9,6 +9,7 @@ public class DeathHandler : MonoBehaviour
     public GameObject playerObject;
     public GameObject deathRattle;
     public Image blackScreen;
+    public Text deathText;
 
     bool isDead = false;
     bool isFallen = false;
@@ -33,7 +34,10 @@ public class DeathHandler : MonoBehaviour
             }
             else if (!isFallen)
             {
-                afterFalling();
+                isFallen = true;
+                deathRattle = new GameObject();
+                deathRattle.transform.position = playerObject.transform.position;
+                cameraObject.GetComponent<CameraMovement>().target = deathRattle;
             }
             else
             {
@@ -44,10 +48,11 @@ public class DeathHandler : MonoBehaviour
                 else if (driftTime > 0)
                 {
                     driftTime -= Time.deltaTime;
-                    Vector3 llama = transform.position - deathRattle.transform.position;
-                    llama.Normalize();
-                    deathRattle.transform.Translate(llama * Time.deltaTime);
+                    Vector3 dirftDir = transform.position - deathRattle.transform.position;
+                    dirftDir.Normalize();
+                    deathRattle.transform.Translate(dirftDir * Time.deltaTime);
                     blackScreen.color = new Color(0f,0f,0f, Mathf.Lerp(1f, 0f, driftTime / 2.5f));
+                    deathText.color = new Color(1f, 0f, 0f, Mathf.Lerp(1f, 0f, driftTime / 2.5f));
                 }
                 else
                 {
@@ -76,14 +81,5 @@ public class DeathHandler : MonoBehaviour
         rb.AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
 
         isDead = true;
-    }
-
-    private void afterFalling()
-    {
-        isFallen = true;
-
-        deathRattle = new GameObject();
-        deathRattle.transform.position = playerObject.transform.position;
-        cameraObject.GetComponent<CameraMovement>().target = deathRattle;
     }
 }
