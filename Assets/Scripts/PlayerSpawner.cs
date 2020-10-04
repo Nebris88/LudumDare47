@@ -11,7 +11,7 @@ public class PlayerSpawner : MonoBehaviour
     public GameObject playerObject;
 
     bool spawned = false;
-    float spawnTime = 3f;
+    float spawnTime = 1f;
 
     void Update()
     {

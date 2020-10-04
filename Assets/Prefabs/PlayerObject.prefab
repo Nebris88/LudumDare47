@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8388574860114068270}
   - component: {fileID: 8388574860114068271}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GroundDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 8388574860704181199}
   - component: {fileID: 8388574860704181196}
   - component: {fileID: 8388574860704181197}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PlayerVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8388574861245839597}
   - component: {fileID: 8388574861245839596}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: CrouchDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 8388574861823101323}
   - component: {fileID: 8388574861823101332}
   - component: {fileID: 8388574861823101322}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: PlayerObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

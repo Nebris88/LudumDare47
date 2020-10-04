@@ -37,7 +37,11 @@ public class TileGrid : MonoBehaviour
 
                 for (int i = 0; i < hit2D.Length; i++)
                 {
-                    if (hit2D[i].collider.gameObject.layer == 8)
+                    if (hit2D[i].collider.gameObject.layer == 10)
+                    {
+                        foundPassive = true;
+                    }
+                    if (hit2D[i].collider.gameObject.layer == 8 && !foundPassive)
                     {
                         if (!foundTiles.Contains(hit2D[i].collider.gameObject)) foundTiles.Add(hit2D[i].collider.gameObject);
 
@@ -47,12 +51,12 @@ public class TileGrid : MonoBehaviour
                         newTile.name = $"Tile at {x}, {y}";
                         newTile.layer = 10;
                         foundPassive = true;
+                        if (hit2D[i].collider.gameObject.tag == "Climbable")
+                        {
+                            newTile.GetComponent<SpriteRenderer>().sprite = climbableSprite;
+                        }
                         //Debug.Log($"Hit at {x}, {y}");
                         //Debug.DrawRay(origin, Vector3.forward * 10, Color.red);
-                    }
-                    if (hit2D[i].collider.gameObject.layer == 10)
-                    {
-                        foundPassive = true;
                     }
                     if (hit2D[i].collider.gameObject.layer == 9)
                     {
@@ -76,7 +80,7 @@ public class TileGrid : MonoBehaviour
                     newTile.transform.position = new Vector3(x, y, 0);
                     newTile.name = $"Wall at {x}, {y}";
                     newTile.layer = 9;
-                    newTile.GetComponent<SpriteRenderer>().color = new Color(.5f, .5f, .5f);
+                    newTile.GetComponent<SpriteRenderer>().sprite = backGroundSprite;//.color = new Color(.5f, .5f, .5f);
                     newTile.GetComponent<SpriteRenderer>().sortingOrder = -5;
                     DestroyImmediate(newTile.GetComponent<BoxCollider2D>());
                 }

@@ -29,11 +29,15 @@ public class PlayerMovement : MonoBehaviour
     public bool victory = false;
 
     Vector3 crouchScale = new Vector3(1f, 0.5f, 1f);
+    ContactFilter2D cf = new ContactFilter2D();
     float moveX, moveY, speed;
 
     void Start()
     {
         cc.gameObject.SetActive(false);
+        int layerMask = 1 << 16;
+        cf.layerMask = ~layerMask;
+        cf.useLayerMask = true;
     }
 
     void Update()
@@ -61,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
             //Check Grounded
             List <Collider2D> gr = new List<Collider2D>();
-            gc.OverlapCollider(new ContactFilter2D(), gr);
+            gc.OverlapCollider(cf, gr);
             grounded = (gr.Count > 0);
 
             //Get Axis Input
