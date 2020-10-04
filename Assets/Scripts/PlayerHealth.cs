@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
         if (!pm.inControl && damageImmunity < 1.5f) pm.inControl = true;
         if (damageImmunity > 0) damageImmunity -= Time.deltaTime;
 
-        if (playerHealth > 0 && transform.position.y < -100) takeDamage(gameObject, 10);
+        if (playerHealth > 0 && transform.position.y < -25) takeDamage(gameObject, 10);
     }
 
     public void takeDamage (GameObject damager, int amount = 1)

@@ -20,7 +20,9 @@ public class CameraMovement : MonoBehaviour
     {
         if (target != null)
         {
-            this.transform.position = new Vector3(Mathf.Clamp(target.transform.position.x, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), this.transform.position.z);
+            this.transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z);
+
+            //this.transform.position = new Vector3(Mathf.Clamp(target.transform.position.x, xMin, xMax), Mathf.Clamp(target.transform.position.y, yMin, yMax), this.transform.position.z);
         }
     }
 

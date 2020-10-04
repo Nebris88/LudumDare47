@@ -13,6 +13,8 @@ public class PlayerSpawner : MonoBehaviour
     bool spawned = false;
     float spawnTime = 1f;
 
+    bool debug = false;
+
     void Update()
     {
         if (!spawned)
@@ -35,5 +37,16 @@ public class PlayerSpawner : MonoBehaviour
         playerObject.transform.position = transform.position;
         MasterManager.Instance.spawnPlayer(playerObject);
         spawned = true;
+
+        if (debug)
+        {
+            PlayerMovement pm = playerObject.GetComponent<PlayerMovement>();
+            PlayerHealth ph = playerObject.GetComponent<PlayerHealth>();
+
+            pm.canSprint = true;
+            pm.canClimb = true;
+            pm.canDoubleJump = true;
+            ph.isFireproof = true;
+        }
     }
 }

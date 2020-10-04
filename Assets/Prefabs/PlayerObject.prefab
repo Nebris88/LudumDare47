@@ -299,7 +299,7 @@ MonoBehaviour:
   walkSpeed: 5
   jumpPower: 14
   canDoubleJump: 1
-  canSprint: 0
+  canSprint: 1
   canClimb: 1
   inControl: 1
   facingRight: 0
