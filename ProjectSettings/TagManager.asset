@@ -17,9 +17,9 @@ TagManager:
   - UI
   - 
   - 
-  - Tile
-  - 
-  - 
+  - TileSpawner
+  - BackgroundTile
+  - PassiveTile
   - 
   - 
   - 
